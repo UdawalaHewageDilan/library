@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2 class="title">Aggiungi un nuovo libro</h2>
+  
+  <form method="post" class="form-container">
+    {% csrf_token %}
+
+    <div class="form-group">
+      {{ form.titolo.label_tag }}
+      {{ form.titolo }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_autore">Seleziona un autore:</label>
+      {{ form.autore }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_nuovo_autore">Oppure inserisci un nuovo autore:</label>
+      {{ form.nuovo_autore }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_editore">Seleziona un editore:</label>
+      {{ form.editore }}
+    </div>
+
+    <div class="form-group">
+      <label for="id_nuovo_editore">Oppure inserisci un nuovo editore:</label>
+      {{ form.nuovo_editore }}
+    </div>
+
+    <div class="form-group">
+      {{ form.anno_edizione.label_tag }}
+      {{ form.anno_edizione }}
+    </div>
+
+    <button type="submit" class="btn">Salva</button>
+  </form>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const autoreSelect = document.getElementById("id_autore");
+        const nuovoAutoreInput = document.getElementById("id_nuovo_autore");
+        const editoreSelect = document.getElementById("id_editore");
+        const nuovoEditoreInput = document.getElementById("id_nuovo_editore");
+
+        function toggleField(select, input) {
+            if (select.value) {
+                input.disabled = true;
+                input.value = "";
+            } else {
+                input.disabled = false;
+            }
+        }
+
+        autoreSelect.addEventListener("change", () => toggleField(autoreSelect, nuovoAutoreInput));
+        nuovoAutoreInput.addEventListener("input", () => {
+            if (nuovoAutoreInput.value.trim()) {
+                autoreSelect.value = "";
+            }
+            toggleField(nuovoAutoreInput, autoreSelect);
+        });
+
+        editoreSelect.addEventListener("change", () => toggleField(editoreSelect, nuovoEditoreInput));
+        nuovoEditoreInput.addEventListener("input", () => {
+            if (nuovoEditoreInput.value.trim()) {
+                editoreSelect.value = "";
+            }
+            toggleField(nuovoEditoreInput, editoreSelect);
+        });
+
+        // Avvia la funzione per lo stato iniziale
+        toggleField(autoreSelect, nuovoAutoreInput);
+        toggleField(editoreSelect, nuovoEditoreInput);
+    });
+  </script>
+
+  <style>
+    .form-container {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .title {
+      text-align: center;
+      color: #343a40;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    input:disabled {
+      background: #e9ecef;
+      cursor: not-allowed;
+    }
+  </style>
+
+{% endblock %}

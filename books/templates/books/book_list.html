@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Lista Libri</h2>
+  <table>
+    <tr>
+      <th>Titolo</th>
+      <th>Autore</th>
+      <th>Editore</th>
+      <th>Anno</th>
+    </tr>
+    {% for book in books %}
+      <tr>
+        <td>
+          <a href="{% url 'book-detail' book.pk %}">{{ book.titolo }}</a>
+        </td>
+        <td>{{ book.autore }}</td>
+        <td>{{ book.editore }}</td>
+        <td>{{ book.anno_edizione }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

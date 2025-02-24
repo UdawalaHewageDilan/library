@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>{{ book.titolo }}</h2>
+  <p><strong>Autore:</strong> {{ book.autore }}</p>
+  <p><strong>Editore:</strong> {{ book.editore }}</p>
+  <p><strong>Anno di Edizione:</strong> {{ book.anno_edizione|default:"N/A" }}</p>
+  <a href="{% url 'book-list' %}">Torna alla lista</a>
+{% endblock %}
